@@ -60,7 +60,7 @@ if __name__ == '__main__':
 	fil_fnames = [f for f in fnames if f[:-3] not in ['pyc']]	
 	for file in fil_fnames:
 		#print("Filename "+os.path.basename(file))
-		with open(file, 'r') as f:
+		with open(file, 'rb') as f:
 			text = ''.join(f.read().strip().split('\n'))			
 			#print(text)
 			if contains_both(text) and selection == 3:				
