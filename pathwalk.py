@@ -34,7 +34,7 @@ if __name__ == '__main__':
 		print("{} is not a directory ".format(root_dir))
 	else:
 		fnames = []
-		for root, dirs, files in os.walk('.'):
+		for root, dirs, files in os.walk(root_dir):
 			for f in files:
 				fnames.append(os.path.join(os.path.abspath(root), f))
 
@@ -57,11 +57,11 @@ if __name__ == '__main__':
 		sys.exit(0)
 
 	#traverse all files one by one and do the checks
-	fil_fnames = [f for f in fnames if f[:-3] not in ['pyc']]	
+	fil_fnames = [ f for f in fnames if os.path.splitext(f)[1] not in ['pyc', 'py', 'git']]	
 	for file in fil_fnames:
-		#print("Filename "+os.path.basename(file))
-		with open(file, 'rb') as f:
-			text = ''.join(f.read().decode('utf-8').strip().split('\n'))			
+		print("Filename "+os.path.basename(file))
+		with open(file, encoding='utf-8') as f:
+			text = ''.join(f.read().strip().split('\n'))			
 			#print(text)
 			if contains_both(text) and selection == 3:				
 				print("Moving : {} ==> {}".format(file, os.path.join(targ_dir, os.path.basename(file))))
