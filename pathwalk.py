@@ -4,23 +4,30 @@ import string, re
 
 #to check the text contains only punctuations
 def check_all_punctuation(text):
-	puncs = set(string.punctuation)
-	return all(i in puncs for i in text)
+	#puncs = set(string.punctuation)
+	#return all(i in puncs for i in text)
+	dig_pattern = re.compile("[\d]")
+	punc_pattern = re.compile("[{}]".format(re.escape(string.punctuation)))
+	return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) == 0
 
 
 #to check the text contains only digits
 def check_all_digits(text):
-	digits = set(string.digits)
-	return all(i in digits for i in text)	
+	#digits = set(string.digits)
+	#str_pattern = re.compile("[A-Za-z]")
+	dig_pattern = re.compile("[\d]")
+	punc_pattern = re.compile("[{}]".format(re.escape(string.punctuation)))
+	return len(punc_pattern.findall(text)) == 0 and len(dig_pattern.findall(text)) > 0
 
 
 #contains both puncts and digits
 def contains_both(text):
 	punc_pattern = re.compile("[{}]".format(re.escape(string.punctuation)))
 	dig_pattern = re.compile("[\d]")
-	str_pattern = re.compile("[A-Za-z]")
+	#str_pattern = re.compile("[A-Za-z]")
+	#return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) > 0 and len(str_pattern.findall(text)) == 0
+	return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) > 0
 
-	return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) > 0 and len(str_pattern.findall(text)) == 0
 	
 
 
@@ -59,8 +66,8 @@ if __name__ == '__main__':
 	#traverse all files one by one and do the checks
 	fil_fnames = [ f for f in fnames if os.path.splitext(f)[1] not in ['pyc', 'py', 'git']]	
 	for file in fil_fnames:
-		print("Filename "+os.path.basename(file))
-		with open(file, encoding='utf-8') as f:
+		#print("Filename "+os.path.basename(file))
+		with open(file, encoding='ISO-8859-1') as f:
 			text = ''.join(f.read().strip().split('\n'))			
 			#print(text)
 			if contains_both(text) and selection == 3:				
