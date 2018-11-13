@@ -61,7 +61,7 @@ if __name__ == '__main__':
 	for file in fil_fnames:
 		#print("Filename "+os.path.basename(file))
 		with open(file, 'rb') as f:
-			text = ''.join(f.read().strip().split('\n'))			
+			text = ''.join(f.read().decode('utf-8').strip().split('\n'))			
 			#print(text)
 			if contains_both(text) and selection == 3:				
 				print("Moving : {} ==> {}".format(file, os.path.join(targ_dir, os.path.basename(file))))
