@@ -1,35 +1,35 @@
 #!/usr/bin/python3
+'''
+	Version: 1.2
+	Last mod date: 14/11/2015 9:59PM
+	Author: manimaran G
+'''
 import os, sys
 import string, re
 
 #to check the text contains only punctuations
 def check_all_punctuation(text):
-	#puncs = set(string.punctuation)
-	#return all(i in puncs for i in text)
-	dig_pattern = re.compile("[\d]")
-	punc_pattern = re.compile("[{}]".format(re.escape(string.punctuation)))
-	return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) == 0
-
+	#dig_pattern = re.compile("[\d]")
+	#punc_pattern = re.compile("[{}]".format(re.escape(string.punctuation)))
+	#return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) == 0
+	puncs = set(string.punctuation)
+	return all(i in puncs for i in text)
 
 #to check the text contains only digits
 def check_all_digits(text):
-	#digits = set(string.digits)
-	#str_pattern = re.compile("[A-Za-z]")
-	dig_pattern = re.compile("[\d]")
-	punc_pattern = re.compile("[{}]".format(re.escape(string.punctuation)))
-	return len(punc_pattern.findall(text)) == 0 and len(dig_pattern.findall(text)) > 0
-
+	#dig_pattern = re.compile("[\d]")
+	#punc_pattern = re.compile("[{}]".format(re.escape(string.punctuation)))
+	#return len(punc_pattern.findall(text)) == 0 and len(dig_pattern.findall(text)) > 0
+	digits = set(string.digits)
+	return all(i in digits for i in text)
 
 #contains both puncts and digits
 def contains_both(text):
 	punc_pattern = re.compile("[{}]".format(re.escape(string.punctuation)))
 	dig_pattern = re.compile("[\d]")
-	#str_pattern = re.compile("[A-Za-z]")
-	#return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) > 0 and len(str_pattern.findall(text)) == 0
-	return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) > 0
-
-	
-
+	str_pattern = re.compile("[A-Za-z]")
+	#return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) > 0
+	return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) > 0 and len(str_pattern.findall(text)) == 0
 
 #main function stars here
 if __name__ == '__main__':
