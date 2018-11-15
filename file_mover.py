@@ -1,17 +1,19 @@
 #!/usr/bin/python3
 '''
 	Version: 1.2
-	Last mod date: 14/11/2015 9:59PM
+	Last mod date: 15/11/2015 9:10AM
 	Author: manimaran G
 '''
 import os, sys
 import string, re
+import shutil
 
 #to check the text contains only punctuations
 def check_all_punctuation(text):
 	#dig_pattern = re.compile("[\d]")
 	#punc_pattern = re.compile("[{}]".format(re.escape(string.punctuation)))
 	#return len(punc_pattern.findall(text)) > 0 and len(dig_pattern.findall(text)) == 0
+	text = re.sub(r'\s+', '', text)
 	puncs = set(string.punctuation)
 	return all(i in puncs for i in text)
 
@@ -20,6 +22,7 @@ def check_all_digits(text):
 	#dig_pattern = re.compile("[\d]")
 	#punc_pattern = re.compile("[{}]".format(re.escape(string.punctuation)))
 	#return len(punc_pattern.findall(text)) == 0 and len(dig_pattern.findall(text)) > 0
+	text = re.sub(r'\s+', '', text)
 	digits = set(string.digits)
 	return all(i in digits for i in text)
 
@@ -72,10 +75,10 @@ if __name__ == '__main__':
 			#print(text)
 			if contains_both(text) and selection == 3:				
 				print("Moving : {} ==> {}".format(file, os.path.join(targ_dir, os.path.basename(file))))
-				os.rename(file, os.path.join(targ_dir, os.path.basename(file)))
+				shutil.move(file, os.path.join(targ_dir, os.path.basename(file)))
 			elif check_all_punctuation(text) and selection == 1:				
 				print("Moving : {} ==> {}".format(file, os.path.join(targ_dir, os.path.basename(file))))
-				os.rename(file, os.path.join(targ_dir, os.path.basename(file)))
+				shutil.move(file, os.path.join(targ_dir, os.path.basename(file)))
 			elif check_all_digits(text) and selection == 2:				
 				print("Moving : {} ==> {}".format(file, os.path.join(targ_dir, os.path.basename(file))))
-				os.rename(file, os.path.join(targ_dir, os.path.basename(file)))
+				shutil.move(file, os.path.join(targ_dir, os.path.basename(file)))
