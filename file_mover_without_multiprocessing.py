@@ -3,12 +3,11 @@
 	Version: 1.4
 	Last mod date: 18/11/2015 4:30PM
 	Author: manimaran G
-	Desc:	With multiprocessing
+	Desc:	Without multiprocessing
 '''
 import os, sys
 import string, re
 import shutil, time
-import multiprocessing
 
 #constants
 PUNC_PATTERN = re.compile("[{}]".format(re.escape(string.punctuation)))
@@ -22,7 +21,6 @@ def read_in_chunks(f, size=128):
         if not chunk:
             break
         yield chunk
-
 
 #contains what function
 def check_content(args):	
@@ -48,14 +46,14 @@ def check_content(args):
 		if tocheck == 1:			
 			if punc_flag and not dig_flag:		
 				print("Moving : {} ==> {}".format(filename, targ_dir))
-				shutil.move(filename, targ_dir)				
+				shutil.move(filename, targ_dir)
 		elif tocheck == 2:
 			if dig_flag and not punc_flag:
 				print("Moving : {} ==> {}".format(filename, targ_dir))
-				shutil.move(filename, targ_dir)				
+				shutil.move(filename, targ_dir)
 		elif tocheck == 3 and (dig_flag and punc_flag):
 			print("Moving : {} ==> {}".format(filename, targ_dir))
-			shutil.move(filename, targ_dir)				
+			shutil.move(filename, targ_dir)
 
 #main function stars here
 if __name__ == '__main__':
@@ -96,9 +94,6 @@ if __name__ == '__main__':
 	#traverse all files one by one and do the checks
 	fil_fnames = [ f for f in fnames if os.path.splitext(f)[1] not in ['pyc', 'py', 'git']]	
 
-	#procc for multiprocessing
-	pool = multiprocessing.Pool()	
-
 	try:
 	
 		for file in fil_fnames:			
@@ -106,25 +101,12 @@ if __name__ == '__main__':
 			#print("Filename "+os.path.basename(file))					
 			#print(text)						
 			if selection == 1:				
-				pool.apply_async(check_content, args=[(file,1, targ_path)])
-				# proc = Process(target=check_content, args=[(file,1, targ_path)])
-				# procs.append(proc)
-				# proc.start()
+				check_content((file, 1, targ_path))
 			elif selection == 2:
-				pool.apply_async(check_content, args=[(file,2, targ_path)])
-				# proc = Process(target=check_content, args=[(file,2, targ_path)])
-				# procs.append(proc)
-				# proc.start()
+				check_content((file, 2, targ_path))
 			elif selection == 3:
-				pool.apply_async(check_content, args=[(file,3, targ_path)])
-				# proc = Process(target=check_content, args=[(file,3, targ_path)])
-				# procs.append(proc)
-				# proc.start()
-
-		# complete the processes
-		pool.close()
-		pool.join()
-
+				check_content((file, 3, targ_path))
+	
 		print("--- {:.2f} seconds ---".format((time.time() - start_time)))
 
 	except Exception as e:
